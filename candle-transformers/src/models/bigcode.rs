@@ -356,4 +356,10 @@ impl GPTBigCode {
         let logits = self.lm_head.forward(&hidden_states)?.squeeze(1)?;
         Ok(logits)
     }
+
+    pub fn clear_cache(&mut self) {
+        for b in &mut self.blocks {
+            b.attn.kv_cache = None;
+        }
+    }
 }
